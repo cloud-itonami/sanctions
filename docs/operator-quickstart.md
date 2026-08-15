@@ -178,6 +178,39 @@ from `svelte/src/routes/xrpc/[...path]/+server.ts`.
 4 KB shim that imports `../output/server/index.js`; grepping only `cloudflare/`
 reports `xrpc files=0` and reads as "the proxy is not deployed", which is wrong.
 
+### 4b. And what `src/app.ts` would do if it were the one deployed ✅
+
+Section 4 establishes that nothing from `app.ts` reaches the artifact. Worth reading
+anyway, because it is the file `kotodama.jsonld` names as `component.path` and the
+one a reader opens to learn what screening means here. Its `screenEntity` handler:
+
+```bash
+grep -n 'screenEntity' -A 24 appview/etzhayyim-wasm-sanctions-sn4c8t1x/src/app.ts
+```
+
+Four things in it disagree with what is advertised, and each is checkable:
+
+| | |
+|---|---|
+| the SQL | `upper(coalesce(subject_name,'')) like 'NAME%'` — a **prefix** match |
+| the manifest | `kotodama.jsonld` advertises "entity matching, **fuzzy name resolution**", and its `convoSystemPrompt` tells the agent it "supports fuzzy name matching, alias resolution" |
+| `score` | written as the constant **`0.85`** for every hit, so a threshold downstream cannot separate an exact hit from a one-character prefix |
+| `matchType` | written as **`"contains"`**, which the SQL is not |
+| `.limit(20)` | a query with more hits returns 20 and `matchCount: matches.length` reports 20 — **truncation with no signal** |
+| the write | happens inside `if (matches.length > 0)`, so **a screen that finds nothing records nothing** |
+
+The last one is the one to carry away. `CLAUDE.md`'s governance section says
+"screen-every-call writes OCEL audit event"; measured, the strings `ocel` and
+`audit` appear **zero** times in `src/app.ts`, and the only write is the per-match
+insert into `vertex_sanctions_match`. For a sanctions control the negative result is
+the evidence you need — "we screened X and found nothing" is the record an auditor
+asks for — and this implementation would keep no trace of it.
+
+None of that is a reason to change the file today: §4 shows it is not deployed and
+§5 shows nothing can screen anyway without list data. It is a reason not to read
+`app.ts` as the specification of screening, and to treat the four rows above as
+requirements for whatever eventually implements it.
+
 ## 5. ⚠ What you cannot do from this tree
 
 Neither implementation can screen anything, because there is no list data and no
