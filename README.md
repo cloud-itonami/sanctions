@@ -21,8 +21,8 @@ is walkable end to end.
 | group | files | what it is | runs? |
 |---|---|---|---|
 | `kotoba/` | 7 | TypeScript reference implementation over AT PDS records | ✅ 4 tests pass, `tsc --noEmit` clean |
-| `appview/…/svelte/` | 7 | SvelteKit app; the one page is a generated placeholder, plus an XRPC proxy route | ✅ builds |
-| `appview/…/src/app.ts` | 1 | a *second*, unrelated implementation over SQL tables | ❌ **not deployed — see below** |
+| `appview/…/src/` (cljs) + `web/` | shadow-cljs + reagent appview UI (migrated from SvelteKit 2026-09-03); the one screen is the generated placeholder shell | ✅ `npx shadow-cljs compile app` → Build completed, 0 errors; renders in Chrome |
+| `appview/…/src/app.ts` | 1 | the Worker implementation over SQL tables — **deployed as `wrangler.jsonc` `main` since the svelte→cljs migration** |
 | metadata | 6 | `README.edn` (108 B), `CLAUDE.md`, `NOTICE`, `migration.edn`, `kotodama.jsonld`, `wrangler.jsonc` | — |
 
 **There are no sanctions lists here.** Zero data files: the only `.json`/`.xml`/`.csv`
@@ -57,8 +57,12 @@ README does not decide it — see [ADR-0001](docs/adr/0001-what-this-repository-
 
 ## What deploys — and what does not
 
-`kotodama.jsonld` names `src/app.ts` as `component.path`. `wrangler.jsonc` deploys
-`svelte/.svelte-kit/cloudflare/_worker.js`. **These are not the same program.**
+`kotodama.jsonld` names `src/app.ts` as `component.path`. **Since the svelte→cljs
+migration (2026-09-03), `wrangler.jsonc` deploys `main: ./src/app.ts` with static
+assets from `web/dist`** — the two are now the same deployed program, resolving the
+contradiction described in [ADR-0001](docs/adr/0001-what-this-repository-deploys.md).
+(The paragraphs below describe the pre-migration state and are kept as the audit
+record of why the deploy target had to change.)
 
 Built from this tree and grepped (quickstart step 4):
 

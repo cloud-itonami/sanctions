@@ -106,24 +106,22 @@ code — and reverting turns it green.
 
 ## 2. Build the appview ✅
 
+> **Updated 2026-09-03 (svelte→cljs migration):** the SvelteKit app was removed.
+> The UI is now shadow-cljs + reagent + kotoba-ui (murakumo-studio構成), built
+> from the repository root:
+
 ```bash
-cd appview/etzhayyim-wasm-sanctions-sn4c8t1x/svelte
-npm install --userconfig=/tmp/empty-npmrc
-node /path/to/root/scripts/resource-guard.mjs run build -- npx vite build
+npm install
+node /path/to/root/scripts/resource-guard.mjs run build -- npx shadow-cljs compile app
 ```
 
 ```
-✓ built in 6.76s
-> Using @sveltejs/adapter-cloudflare
-  ✔ done
+[:app] Build completed. (95 files, 94 compiled, 0 warnings)
 ```
 
-Use `resource-guard` rather than calling `vite build` directly — this workspace
-allows one heavy build at a time across all sessions.
-
-The build produces `svelte/.svelte-kit/cloudflare/_worker.js` (4,335 bytes), which
-is what `wrangler.jsonc` names as `main`. Neither `node_modules/` nor
-`.svelte-kit/` is ignored by git; do not commit them.
+The build emits `web/dist/js/main.js` + `web/dist/vendor/kotoba-ui.css`, which
+`wrangler.jsonc` serves as static assets (`assets.directory: ../../web/dist`).
+`node_modules/` and `.shadow-cljs/` are not committed; do not commit them.
 
 ## 3. Do not deploy it yet ⚠
 
@@ -149,6 +147,12 @@ traffic. Find out who owns the `etzhayyim.com` zone and what is meant to answer 
 those names before running `wrangler deploy`.
 
 ## 4. What the deployed artifact actually contains ✅
+
+> **Updated 2026-09-03 (svelte→cljs migration):** `wrangler.jsonc` now deploys
+> `main: ./src/app.ts` (bundled by wrangler) with `web/dist` as static assets.
+> `kotodama.jsonld`'s `component.path` and the deployed worker are the same
+> program — the mismatch this section audited no longer exists. Kept as the
+> audit record:
 
 `kotodama.jsonld` names `src/app.ts` as `component.path`; `wrangler.jsonc` deploys
 the SvelteKit build. They are different programs, so check which one you are about
