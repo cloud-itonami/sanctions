@@ -112,7 +112,7 @@ code — and reverting turns it green.
 
 ```bash
 npm install
-node /path/to/root/scripts/resource-guard.mjs run build -- npx shadow-cljs compile app
+node /path/to/root/scripts/resource-guard.mjs run build -- amu compile --target wasm32-browser app
 ```
 
 ```
