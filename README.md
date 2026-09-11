@@ -21,7 +21,7 @@ is walkable end to end.
 | group | files | what it is | runs? |
 |---|---|---|---|
 | `kotoba/` | 7 | TypeScript reference implementation over AT PDS records | ✅ 4 tests pass, `tsc --noEmit` clean |
-| `appview/…/src/` (cljs) + `web/` | shadow-cljs + reagent appview UI (migrated from SvelteKit 2026-09-03); the one screen is the generated placeholder shell | ✅ `npx shadow-cljs compile app` → Build completed, 0 errors; renders in Chrome |
+| `appview/…/src/` (cljs) + `web/` | shadow-cljs + reagent appview UI (migrated from SvelteKit 2026-09-03); the one screen is the generated placeholder shell | ✅ `amu compile --target wasm32-browser app` → Build completed, 0 errors; renders in Chrome |
 | `appview/…/src/app.ts` | 1 | the Worker implementation over SQL tables — **deployed as `wrangler.jsonc` `main` since the svelte→cljs migration** |
 | metadata | 6 | `README.edn` (108 B), `CLAUDE.md`, `NOTICE`, `migration.edn`, `kotodama.jsonld`, `wrangler.jsonc` | — |
 
