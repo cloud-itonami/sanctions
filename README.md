@@ -4,7 +4,7 @@
 **no sanctions data**. It is a reference implementation plus an appview scaffold,
 extracted from `etzhayyim/root` on 2026-07-19 and unchanged since.
 
-Read this before `CLAUDE.md`. `CLAUDE.md` was written for the tree this code was
+Read this before `AGENTS.md`. `AGENTS.md` was written for the tree this code was
 extracted *from*, and describes files that were not carried across — see
 [Corrections](#corrections-to-claudemd) below.
 
@@ -23,7 +23,7 @@ is walkable end to end.
 | `kotoba/` | 7 | TypeScript reference implementation over AT PDS records | ✅ 4 tests pass, `tsc --noEmit` clean |
 | `appview/…/src/` (cljs) + `web/` | shadow-cljs + reagent appview UI (migrated from SvelteKit 2026-09-03); the one screen is the generated placeholder shell | ✅ `amu compile --target wasm32-browser app` → Build completed, 0 errors; renders in Chrome |
 | `appview/…/src/app.ts` | 1 | the Worker implementation over SQL tables — **deployed as `wrangler.jsonc` `main` since the svelte→cljs migration** |
-| metadata | 6 | `README.edn` (108 B), `CLAUDE.md`, `NOTICE`, `migration.edn`, `kotodama.jsonld`, `wrangler.jsonc` | — |
+| metadata | 6 | `README.edn` (108 B), `AGENTS.md`, `NOTICE`, `migration.edn`, `kotodama.jsonld`, `wrangler.jsonc` | — |
 
 **There are no sanctions lists here.** Zero data files: the only `.json`/`.xml`/`.csv`
 in the tree are `package.json` and `tsconfig.json`. The lists are fetched from the
@@ -123,12 +123,12 @@ From the comments in `app.ts`; probed 2026-08-16.
 `types.ts` also declares `UK-OFSI`, `AU-DFAT` and `CA-OSFI` as valid `listSource`
 values. No URL for any of the three is recorded anywhere in the tree.
 
-## Corrections to `CLAUDE.md`
+## Corrections to `AGENTS.md`
 
-`CLAUDE.md` predates the extraction. Three of its claims are not true of this
+`AGENTS.md` predates the extraction. Three of its claims are not true of this
 repository:
 
-| `CLAUDE.md` says | in this tree |
+| `AGENTS.md` says | in this tree |
 |---|---|
 | "Manifest-driven (`20-actors/sanctions/actor-manifest.jsonld`)" | no `20-actors/` directory; the only manifest is `appview/…/kotodama.jsonld` |
 | "Lexicons `sanctions/` (5 files)" | no lexicon files at all |
