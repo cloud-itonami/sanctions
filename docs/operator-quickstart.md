@@ -203,7 +203,7 @@ Four things in it disagree with what is advertised, and each is checkable:
 | `.limit(20)` | a query with more hits returns 20 and `matchCount: matches.length` reports 20 — **truncation with no signal** |
 | the write | happens inside `if (matches.length > 0)`, so **a screen that finds nothing records nothing** |
 
-The last one is the one to carry away. `CLAUDE.md`'s governance section says
+The last one is the one to carry away. `AGENTS.md`'s governance section says
 "screen-every-call writes OCEL audit event"; measured, the strings `ocel` and
 `audit` appear **zero** times in `src/app.ts`, and the only write is the per-match
 insert into `vertex_sanctions_match`. For a sanctions control the negative result is

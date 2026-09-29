@@ -3,16 +3,16 @@
 - **Status**: accepted
 - **Date**: 2026-08-16
 - **Applies to**: `README.md`, `docs/operator-quickstart.md`
-- **Supersedes**: nothing. `CLAUDE.md` is left in place unchanged.
+- **Supersedes**: nothing. `AGENTS.md` is left in place unchanged.
 
 ## Context
 
 This repository was extracted from `etzhayyim/root@168497bd` on 2026-07-19 and has
 not been touched since. It had no `README.md` — `README.edn` is 108 bytes of schema
-metadata — so the only prose about it was `CLAUDE.md`, which came across from the
+metadata — so the only prose about it was `AGENTS.md`, which came across from the
 source tree and describes that tree.
 
-Three of `CLAUDE.md`'s claims are not true of these 21 files: it points at
+Three of `AGENTS.md`'s claims are not true of these 21 files: it points at
 `20-actors/sanctions/actor-manifest.jsonld` (no such directory), at five lexicon
 files under `sanctions/` (none present), and at "50K sanctioned entities" (no data
 files at all). Those statements were probably accurate about the deployment they
@@ -24,13 +24,13 @@ description *of*.
 ## Decision
 
 **The prose in this repository describes what is in the tree, measured, and says so
-where that contradicts `CLAUDE.md`.**
+where that contradicts `AGENTS.md`.**
 
 Three consequences, stated so they are not "corrected" back later:
 
-1. **`CLAUDE.md` stays as it is, and is not the inventory.** It is a useful record
+1. **`AGENTS.md` stays as it is, and is not the inventory.** It is a useful record
    of intent for a wider system. `README.md` carries a table of the specific claims
-   that do not hold here. Deleting or rewriting `CLAUDE.md` would destroy the only
+   that do not hold here. Deleting or rewriting `AGENTS.md` would destroy the only
    surviving description of what this actor is for; leaving it as the first thing a
    reader meets would keep costing them the hour it costs to discover the gap.
 
@@ -67,5 +67,5 @@ two implementations disagree, and that the deployed artifact is not the file the
 manifest names. Previously each of those cost an independent investigation.
 
 The cost is that this repository now contains prose that visibly contradicts
-`CLAUDE.md`. That contradiction is the honest state; hiding it would mean choosing
+`AGENTS.md`. That contradiction is the honest state; hiding it would mean choosing
 which document to make silently wrong.
